@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "p24hj256gp610a.h": "c"
+        "p24hj256gp610a.h": "c",
+        "an.h": "c",
+        "commons.h": "c"
     }
 }
