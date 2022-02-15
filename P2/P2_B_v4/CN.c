@@ -19,7 +19,7 @@ void _ISR_NO_PSV _CNInterrupt()
         T7CONbits.TON = !T7CONbits.TON; // Deshabilitar interrupciones del Temporizador T7
         flag = 0;
     }
-    if (!PORTDbits.RD13) // Comprobar si el pulsador S5 ha sido pulsado
+    if (!PORTDbits.RD13) // Comprobar si el pulsador S4 ha sido pulsado
     {
         flag = 0;
         reset = 1;

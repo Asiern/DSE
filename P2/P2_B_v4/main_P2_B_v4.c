@@ -20,7 +20,7 @@ Fecha:
 int main()
 {
 
-	while (PORTDbits.RD6)
+	while (PORTDbits.RD6) // Esperar a que el pulsador S3 sea pulsado
 		Nop();
 
 	init_CN();
