@@ -16,10 +16,14 @@ Fecha:
 #include "CN.h"
 #include "commons.h"
 #include "globals.h"
+#include "LCD.h"
 
 int main()
 {
 
+	Init_LCD();
+
+	puts_lcd("Pulsa S3", 1);
 	while (PORTDbits.RD6)
 		Nop();
 
