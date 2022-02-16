@@ -27,7 +27,7 @@ void inic_crono(unsigned int *mili, unsigned int *deci,
     *min = 0;
 }
 
-void delay_10ms() // detecta que el timer ha llegado a 2 milisegundos
+void delay_10ms() // detecta que el timer ha llegado a 10 milisegundos
 {
     // Completad el codigo
     while (IFS3bits.T7IF == 0) // encuesta continua
@@ -53,6 +53,8 @@ void cronometro(unsigned int *mili, unsigned int *deci,
     {
         (*deci) = 0;
         (*seg)++;
+        LATAbits.LATA6 = !LATAbits.LATA6;
+    }
     }
     if ((*seg) == 60)
     {
