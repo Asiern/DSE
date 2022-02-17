@@ -1,5 +1,8 @@
 #include "p24HJ256GP610A.h"
 #include "commons.h"
+#include "utilidades.h"
+#include "LCD.h"
+#include "memoria.h"
 
 // Globals
 #include "globals.h"
@@ -7,6 +10,9 @@ unsigned int mili, deci, seg, min, reset;
 
 void Delay_ms(int delay)
 {
+    if (delay > 100)
+        while (1)
+            ;
     TMR9 = 0;
     PR9 = 25000 - 1;
     T9CONbits.TCKPS = 0;
@@ -25,6 +31,9 @@ void Delay_ms(int delay)
 
 void Delay_us(int delay)
 {
+    if (delay > 100)
+        while (1)
+            ;
     TMR9 = 0;
     PR9 = 25000 - 1;
     T9CONbits.TCKPS = 1;
@@ -59,8 +68,7 @@ void inic_Timer7()
     T7CONbits.TON = 1;   // puesta en marcha del temporizador
 }
 
-void inic_crono(unsigned int *mili, unsigned int *deci,
-                unsigned int *seg, unsigned int *min)
+void inic_crono()
 // inicializacion de las variables del cronometro
 {
     mili = 0;
@@ -82,26 +90,31 @@ void cronometro() // control del tiempo mediante el temporizador 7
         LATAbits.LATA7 = 0;
     }
 
-    if (!flag)
-        return;
+    if (flag)
+    {
 
-    mili += 10;
-    if (mili == 100)
-    {
-        mili = 0;
-        deci++;
-        LATAbits.LATA7 = !LATAbits.LATA7;
+        mili += 10;
+        if (mili == 100)
+        {
+            mili = 0;
+            deci++;
+            LATAbits.LATA7 = !LATAbits.LATA7;
+        }
+        if (deci == 10)
+        {
+            deci = 0;
+            seg++;
+            LATAbits.LATA6 = !LATAbits.LATA6;
+            conversion_tiempo(&(Ventana_LCD[1][10]), 2);
+            line_2();
+            puts_lcd(Ventana_LCD[1], 16);
+        }
+        if (seg == 60)
+        {
+            seg = 0;
+            min++;
+        }
+
+        flag = 0;
     }
-    if (deci == 10)
-    {
-        deci = 0;
-        seg++;
-        LATAbits.LATA6 = !LATAbits.LATA6;
-    }
-    if (seg == 60)
-    {
-        seg = 0;
-        min++;
-    }
-    flag = 0;
 }
