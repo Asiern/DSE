@@ -3,7 +3,7 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>P3_LCD_v1</name>
+            <name>P3_LCD_v2</name>
             <creation-uuid>31854ffa-b47f-4b44-b1a9-6f5fe41a6332</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
