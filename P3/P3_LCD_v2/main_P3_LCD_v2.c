@@ -21,7 +21,8 @@ Fecha:
 
 int main()
 {
-	line = 1;
+	line = 0;
+	pointer = 0;
 	Init_LCD();
 
 	inic_oscilator(); // Seleccion e inicializacion del reloj: 40 MHz
@@ -29,7 +30,6 @@ int main()
 
 	copiar_FLASH_RAM(Mens_LCD_1, 0);
 	copiar_FLASH_RAM(Mens_LCD_2, 1);
-	line = 2;
 
 	while (PORTDbits.RD6)
 		Nop();
@@ -45,7 +45,6 @@ int main()
 	inic_Timer7(); // Inicializacion T7 con un periodo de 10 milisegundos.
 
 	copiar_FLASH_RAM(Mens_LCD_6, 1);
-	line = 2;
 	while (1)
 		cronometro();
 

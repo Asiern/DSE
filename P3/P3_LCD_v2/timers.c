@@ -90,7 +90,7 @@ void inic_crono()
 
 void cronometro() // control del tiempo mediante el temporizador 7
 {
-    if (reset) // Resetear cronómetro
+    if (reset) // Resetear cron�metro
     {
         mili = 0;
         deci = 0;
@@ -100,7 +100,6 @@ void cronometro() // control del tiempo mediante el temporizador 7
         LATAbits.LATA6 = 0;
         LATAbits.LATA7 = 0;
         copiar_FLASH_RAM(Mens_LCD_6, 1);
-        line = 2;
     }
 
     if (flag)
@@ -115,7 +114,6 @@ void cronometro() // control del tiempo mediante el temporizador 7
             unsigned char c[2];
             conversion_tiempo(&c, deci);
             Ventana_LCD[1][13] = c[1];
-            line = 2;
         }
         if (deci == 10)
         {
@@ -123,14 +121,12 @@ void cronometro() // control del tiempo mediante el temporizador 7
             seg++;
             LATAbits.LATA6 = !LATAbits.LATA6;
             conversion_tiempo(&(Ventana_LCD[1][10]), seg == 60 ? 0 : seg);
-            line = 2;
         }
         if (seg == 60)
         {
             seg = 0;
             min++;
             conversion_tiempo(&(Ventana_LCD[1][7]), min);
-            line = 2;
         }
 
         flag = 0;

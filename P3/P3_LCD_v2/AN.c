@@ -4,7 +4,7 @@
 #include "memoria.h"
 #include "LCD.h"
 #include "globals.h"
-unsigned int flag, line;
+unsigned int flag, pointer, line;
 
 void _ISR_NO_PSV _T7Interrupt()
 {
@@ -14,13 +14,14 @@ void _ISR_NO_PSV _T7Interrupt()
 
 void _ISR_NO_PSV _T5Interrupt()
 {
-    if (line == 1)
-        line_1();
-    else if (line == 2)
-        line_2();
+    lcd_data(Ventana_LCD[line][2]);
+    if (pointer == 15)
+    {
+        pointer = 0;
+        // if (line == 1) // Reset pointer pos
+        line = line == 0 ? 1 : 0;
+    }
     else
-        return;
-
-    puts_lcd(Ventana_LCD[line - 1], 16);
+        pointer++;
     IFS1bits.T5IF = 0; // Apagar el flag de petición de interrupción
 }

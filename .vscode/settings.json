@@ -3,6 +3,7 @@
         "p24hj256gp610a.h": "c",
         "an.h": "c",
         "commons.h": "c",
-        "memoria.h": "c"
+        "memoria.h": "c",
+        "globals.h": "c"
     }
 }
