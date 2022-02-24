@@ -4,6 +4,7 @@
         "an.h": "c",
         "commons.h": "c",
         "memoria.h": "c",
-        "globals.h": "c"
+        "globals.h": "c",
+        "uart2_rs232.h": "c"
     }
 }
