@@ -92,15 +92,10 @@ void recibir_teclas(unsigned char num)
 // Los guarda en Ventana_LCD para que se visualicen en la pantalla LCD
 {
 	int i = 0;
-	int line = 0;
-	int pos = 0;
 
 	while (i < num)
 	{
-		Ventana_LCD[line][pos] = get_UART2();
+		Ventana_LCD[0][i] = get_UART2();
 		i++;
-		if (pos == 15)
-			line = 1;
-		pos = pos == 15 ? pos = 0 : pos++;
 	}
 }
