@@ -195,4 +195,5 @@ void _ISR_NO_PSV _U2TXInterrupt()
 	default:
 		break;
 	}
+    IFS1bits.U2TXIF = 0;
 }
