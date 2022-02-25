@@ -18,7 +18,7 @@ enum
 	HOME,
 	CLR,
 	JP
-} estado;
+} estado = L1;
 
 int TPos = 0; // Posicion del caracter a enviar por UART de la ventanaLCD
 
@@ -59,6 +59,7 @@ void inic_UART2()
 	U2STAbits.UTXEN = 1;   // habilitar transmision tras habilitar modulo
 
 	Delay_us(T_1BIT_US); // Esperar tiempo de 1 bit
+    U2TXREG = 0;
 }
 
 void put_UART2(char c)
