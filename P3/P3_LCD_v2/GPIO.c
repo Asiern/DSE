@@ -16,3 +16,13 @@ void inic_leds()
   Nop();
   LATA = LATA & 0xff00; // Apagar los leds
 }
+
+void inic_pulsadores()
+{
+  // Definir pines AN16 - AN31 como pines digitales para evitar problemas
+  AD1PCFGH = 0xffff;
+
+  TRISDbits.TRISD13 = 1; // Definir los pines del pulsador S4 como entrada
+  TRISDbits.TRISD6 = 1;  // Definir los pines del pulsador S3 como entrada
+  TRISDbits.TRISD7 = 1;  // Definir los pines del pulsador S6 como entrada
+}
