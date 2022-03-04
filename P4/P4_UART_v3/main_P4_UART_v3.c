@@ -28,14 +28,11 @@ int main()
 	inic_leds();	   // Inicializacio�n leds: sentido y valor inicial.
 	inic_pulsadores(); // Inicializar pulsadores
 	inic_UART2();	   // Inicializar UART
+	inic_Timer5();
 
 	// Escribir Mensaje inicial en la LCD
 	copiar_FLASH_RAM(Mens_LCD_1, 0);
 	copiar_FLASH_RAM(Mens_LCD_2, 1);
-	line_1();
-	puts_lcd(&(Ventana_LCD[0][0]), 16);
-	line_2();
-	puts_lcd(&(Ventana_LCD[1][0]), 16);
 
 	// Esperar a la pulsacion de S3 (encuesta)
 	while (PORTDbits.RD6)
@@ -50,8 +47,6 @@ int main()
 
 	// Escribir Mensaje del cronómetro en la segunda linea
 	copiar_FLASH_RAM(Mens_LCD_6, 1);
-	line_2();
-	puts_lcd(Ventana_LCD[1], 16);
 
 	while (1)
 		cronometro();
