@@ -97,37 +97,31 @@ void cronometro() // control del tiempo mediante el temporizador 7
 
     if (flag)
     {
-
         mili += 10;
         if (mili == 100)
         {
             mili = 0;
             deci++;
             LATAbits.LATA7 = !LATAbits.LATA7;
+            if (deci == 10)
+            {
+                deci = 0;
+                seg++;
+                LATAbits.LATA6 = !LATAbits.LATA6;
+                if (seg == 60)
+                {
+                    seg = 0;
+                    min++;
+                    conversion_tiempo(&(Ventana_LCD[1][7]), min);
+                }
+                conversion_tiempo(&(Ventana_LCD[1][10]), seg == 60 ? 0 : seg);
+            }
             unsigned char c[2];
             conversion_tiempo(&c, deci);
             Ventana_LCD[1][13] = c[1];
             line_2();
             puts_lcd(Ventana_LCD[1], 16);
         }
-        if (deci == 10)
-        {
-            deci = 0;
-            seg++;
-            LATAbits.LATA6 = !LATAbits.LATA6;
-            conversion_tiempo(&(Ventana_LCD[1][10]), seg == 60 ? 0 : seg);
-            line_2();
-            puts_lcd(Ventana_LCD[1], 16);
-        }
-        if (seg == 60)
-        {
-            seg = 0;
-            min++;
-            conversion_tiempo(&(Ventana_LCD[1][7]), min);
-            line_2();
-            puts_lcd(Ventana_LCD[1], 16);
-        }
-
         flag = 0;
     }
 }
