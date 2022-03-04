@@ -6,7 +6,7 @@
 
 // Globals
 #include "globals.h"
-unsigned int mili, deci, seg, min, reset;
+unsigned int mili, deci, seg, min, reset, flag;
 
 void Delay_ms(int delay)
 {
@@ -124,4 +124,10 @@ void cronometro() // control del tiempo mediante el temporizador 7
         }
         flag = 0;
     }
+}
+
+void _ISR_NO_PSV _T7Interrupt()
+{
+    flag = 1;
+    IFS3bits.T7IF = 0; // Apagar el flag de petición de interrupción
 }

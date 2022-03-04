@@ -4,7 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>../AN.h</itemPath>
       <itemPath>../CN.h</itemPath>
       <itemPath>../GPIO.h</itemPath>
       <itemPath>../LCD.h</itemPath>
@@ -23,7 +22,6 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>../AN.c</itemPath>
       <itemPath>../CN.c</itemPath>
       <itemPath>../GPIO.c</itemPath>
       <itemPath>../LCD.c</itemPath>
@@ -205,6 +203,9 @@
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
       </C30Global>
+      <RealICEPlatformTool>
+        <property key="firmware.download.all" value="false"/>
+      </RealICEPlatformTool>
     </conf>
   </confs>
 </configurationDescriptor>
