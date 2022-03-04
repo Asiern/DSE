@@ -11,14 +11,14 @@ Fecha:
 #include "memoria.h"
 #include "globals.h"
 
+// Estados utilizados en la rutina de atencion del UART
 enum
 {
-	L1,
-	L2,
-	HOME,
-	CLR,
-	JP
-} estado = L1;
+	L1,			 // Estado de escritura en la linea1
+	L2,			 // Estado de escritura en la linea2
+	HOME,		 // Estado de mover el cursor a la posicion inicial
+	JP			 // Estado de escritura de salto de linea
+} estado = HOME; // Estado inicial L1
 
 int TPos = 0; // Posicion del caracter a enviar por UART de la ventanaLCD
 
@@ -59,7 +59,7 @@ void inic_UART2()
 	U2STAbits.UTXEN = 1;   // habilitar transmision tras habilitar modulo
 
 	Delay_us(T_1BIT_US); // Esperar tiempo de 1 bit
-    U2TXREG = 0;
+	U2TXREG = 0;
 }
 
 void put_UART2(char c)
@@ -125,7 +125,7 @@ void _ISR_NO_PSV _U2RXInterrupt()
 		T7CONbits.TON = 1; // Habilitar interrupciones del Temporizador T7
 		flag = 0;
 		break;
-	case 'i':
+	case 'i': // Resetear Temporizador T7
 		flag = 0;
 		reset = 1;
 		TMR7 = 0;
@@ -136,6 +136,18 @@ void _ISR_NO_PSV _U2RXInterrupt()
 	IFS1bits.U2RXIF = 0;
 }
 
+/**
+ * Funcion para atender a las interrupciones del UART
+ *
+ * Mediante una máquina de estados (con los estados definidos en el enum llamado estado),
+ * gestionamos el envio de caracteres por UART para la correcta visualización.
+ *
+ * En los estados L1 y L2, escribimos en su línea correspondiente
+ * Mediante el estado JP, escribimos el salto de línea.
+ * Mediante el estado HOME, movemos el cursor al principio
+ *
+ * Se utiliza la variable TPos para indicar la posición en la que está escribiendo
+ */
 void _ISR_NO_PSV _U2TXInterrupt()
 {
 	switch (estado)
@@ -167,18 +179,8 @@ void _ISR_NO_PSV _U2TXInterrupt()
 		U2TXREG = Ventana_LCD[1][TPos];
 		if (TPos == 15)
 		{
-			estado = CLR;
-			TPos = 0;
-		}
-		else
-			TPos++;
-		break;
-	case CLR:
-		U2TXREG = clrscr[TPos];
-		if (TPos == 3)
-		{
-			TPos = 0;
 			estado = HOME;
+			TPos = 0;
 		}
 		else
 			TPos++;
@@ -196,5 +198,5 @@ void _ISR_NO_PSV _U2TXInterrupt()
 	default:
 		break;
 	}
-    IFS1bits.U2TXIF = 0;
+	IFS1bits.U2TXIF = 0;
 }

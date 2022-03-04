@@ -1,0 +1,14 @@
+{
+  "files.associations": {
+    "bit": "c",
+    "compare": "c",
+    "cstddef": "c",
+    "list": "c",
+    "string": "c",
+    "limits": "c",
+    "memory": "c",
+    "new": "c",
+    "functional": "c",
+    "uart2_rs232.h": "c"
+  }
+}
