@@ -9,6 +9,7 @@
     "memory": "c",
     "new": "c",
     "functional": "c",
-    "uart2_rs232.h": "c"
+    "uart2_rs232.h": "c",
+    "memoria.h": "c"
   }
 }
