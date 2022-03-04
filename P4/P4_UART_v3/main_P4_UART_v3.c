@@ -23,10 +23,13 @@ Fecha:
 int main()
 {
 
-	inic_oscilator(); // Seleccion e inicializacion del reloj: 40 MHz
+	inic_oscilator();  // Seleccion e inicializacion del reloj: 40 MHz
+	Init_LCD();		   // Inicializar LCD
+	inic_leds();	   // Inicializacio�n leds: sentido y valor inicial.
+	inic_pulsadores(); // Inicializar pulsadores
+	inic_UART2();	   // Inicializar UART
 
-	Init_LCD();
-
+	// Escribir Mensaje inicial en la LCD
 	copiar_FLASH_RAM(Mens_LCD_1, 0);
 	copiar_FLASH_RAM(Mens_LCD_2, 1);
 	line_1();
@@ -34,23 +37,22 @@ int main()
 	line_2();
 	puts_lcd(&(Ventana_LCD[1][0]), 16);
 
+	// Esperar a la pulsacion de S3 (encuesta)
 	while (PORTDbits.RD6)
-		Nop();
+		;
 
-	reset = 0;
-	init_CN();
+	reset = 0; // Inicializar reset a 0
+	flag = 0;  // Inicializar flag a 0
 
-	inic_leds(); // Inicializacio�n leds: sentido y valor inicial.
-
-	inic_crono(); // Inicializacion variables cronometro.
-
-	flag = 0;
+	init_CN();	   // Inicializar modulo de interrupciones CN
+	inic_crono();  // Inicializacion variables cronometro.
 	inic_Timer7(); // Inicializacion T7 con un periodo de 10 milisegundos.
 
+	// Escribir Mensaje del cronómetro en la segunda linea
 	copiar_FLASH_RAM(Mens_LCD_6, 1);
 	line_2();
 	puts_lcd(Ventana_LCD[1], 16);
-	inic_UART2();
+
 	while (1)
 		cronometro();
 	return (0);
