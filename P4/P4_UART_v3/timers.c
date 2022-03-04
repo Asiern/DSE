@@ -117,7 +117,7 @@ void cronometro() // control del tiempo mediante el temporizador 7
                 conversion_tiempo(&(Ventana_LCD[1][10]), seg == 60 ? 0 : seg);
             }
             unsigned char c[2];
-            conversion_tiempo(&c, deci);
+            conversion_tiempo(&(c[0]), deci);
             Ventana_LCD[1][13] = c[1];
             line_2();
             puts_lcd(Ventana_LCD[1], 16);

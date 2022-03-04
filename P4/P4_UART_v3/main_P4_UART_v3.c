@@ -30,9 +30,9 @@ int main()
 	copiar_FLASH_RAM(Mens_LCD_1, 0);
 	copiar_FLASH_RAM(Mens_LCD_2, 1);
 	line_1();
-	puts_lcd(&Ventana_LCD[0], 16);
+	puts_lcd(&(Ventana_LCD[0][0]), 16);
 	line_2();
-	puts_lcd(&(Ventana_LCD[1]), 16);
+	puts_lcd(&(Ventana_LCD[1][0]), 16);
 
 	while (PORTDbits.RD6)
 		Nop();
