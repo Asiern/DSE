@@ -10,20 +10,24 @@ unsigned int mili, deci, seg, min, reset;
 
 void Delay_ms(int delay)
 {
-    if (delay > 100)
-        while (1)
-            ;
-    TMR9 = 0;
-    PR9 = 25000 - 1;
-    T9CONbits.TCKPS = 0;
-    T9CONbits.TCS = 0;
-    T9CONbits.TON = 1;
+    TMR9 = 0;            // Inicializar registro contador
+    T9CONbits.TCKPS = 0; // preescaler	1:1
 
-    // Encuesta
-    while (TMR9 < (delay * 20))
+    if (delay > 2)
     {
-        Nop();
+        T9CONbits.TCKPS = 1; // preescaler	1:8
+        PR9 = delay * (125000 / 8);
     }
+
+    T9CONbits.TCS = 0;
+    T9CONbits.TGATE = 0; // Apagar modo gate
+    T9CONbits.TON = 1;   // Encender temporizador
+
+    // Esperar a que pase el tiempo
+    while (IFS3bits.T9IF == 0)
+        ;
+
+    IFS3bits.T9IF = 0; // Apagar flag de interrupcion
 
     // Apagar timer
     T9CONbits.TON = 0;
@@ -31,17 +35,18 @@ void Delay_ms(int delay)
 
 void Delay_us(int delay)
 {
-    TMR9 = 0;
-    PR9 = 25000 - 1;
-    T9CONbits.TCKPS = 1;
+    TMR9 = 0;            // Inicializar registro contador
+    T9CONbits.TCKPS = 1; // preescaler	1:8
     T9CONbits.TCS = 0;
     T9CONbits.TON = 1;
 
-    // Encuesta
-    while (TMR9 < (delay * 2000 / 8))
-    {
-        Nop();
-    }
+    PR9 = (delay * 2000 / 8);
+
+    // Esperar a que pase el tiempo
+    while (IFS3bits.T9IF == 0)
+        ;
+
+    IFS3bits.T9IF = 0; // Apagar flag de interrupcion
 
     // Apagar timer
     T9CONbits.TON = 0;
