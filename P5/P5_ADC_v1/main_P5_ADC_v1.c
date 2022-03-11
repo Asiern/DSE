@@ -19,6 +19,7 @@ Fecha:
 #include "LCD.h"
 #include "memoria.h"
 #include "UART2_RS232.h"
+#include "ADC1.h"
 
 int main()
 {
@@ -28,6 +29,7 @@ int main()
 	inic_leds();	   // Inicializacio�n leds: sentido y valor inicial.
 	inic_pulsadores(); // Inicializar pulsadores
 	inic_UART2();	   // Inicializar UART
+	inic_ADC1();
 	inic_Timer5();
 
 	// Escribir Mensaje inicial en la LCD
@@ -47,8 +49,13 @@ int main()
 
 	// Escribir Mensaje del cronómetro en la segunda linea
 	copiar_FLASH_RAM(Mens_LCD_6, 1);
+	copiar_FLASH_RAM(Mens_LCD_7, 0);
 
 	while (1)
+	{
 		cronometro();
+		comienzo_muestreo();
+		recoger_valorADC1();
+	}
 	return (0);
 }

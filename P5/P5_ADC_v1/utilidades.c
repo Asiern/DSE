@@ -11,7 +11,7 @@ Egileak eta data!!!
 // dir, direccion a partir de la cual queremos que la funcion devuelva los codigos ASCII
 // En dir estara el caracter de mas peso y en dir+1 el de menos peso
 
-unsigned char tabla_carac[16] = "0123456789";
+unsigned char tabla_carac[16] = "0123456789ABCDEF";
 void conversion_tiempo(unsigned char *dir, unsigned int val)
 {
     unsigned char dig;
@@ -27,6 +27,26 @@ void conversion_tiempo(unsigned char *dir, unsigned int val)
         *dir = dig;
         dir++;
         dig = val % 10;
+        dig = tabla_carac[dig];
+        *dir = dig;
+    }
+}
+
+void conversion_hex(unsigned char *dir, unsigned int val)
+{
+    unsigned char dig;
+    if (val > 99)
+    {
+        while (1)
+            ;
+    }
+    else
+    {
+        dig = val / 16;
+        dig = tabla_carac[dig];
+        *dir = dig;
+        dir++;
+        dig = val % 16;
         dig = tabla_carac[dig];
         *dir = dig;
     }
