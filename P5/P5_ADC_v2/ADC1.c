@@ -8,8 +8,6 @@ Fecha:
 #include "memoria.h"
 #include "commons.h"
 
-unsigned long cont;
-
 void inic_ADC1(void)
 {
     cont = 0;
@@ -37,7 +35,7 @@ void inic_ADC1(void)
     // Reloj con el que funciona el ADC:  0= reloj CPU; 1= RC erlojua
     // AD1CON3bits.ADRC = 0;  //
     AD1CON3bits.SAMC = 31; // Tiempo muestreo = numero de Tad
-    AD1CON3bits.ADCS = 43; // Relacion entre TAD y Tcy TAD = Tcy(ADCS+1)
+    AD1CON3bits.ADCS = 1;  // Relacion entre TAD y Tcy TAD = Tcy(ADCS+1)
 
     // Inicializacion registro control AD1CON4
     AD1CON4 = 0;
@@ -105,7 +103,6 @@ void recoger_valorADC1()
 
 void _ISR_NO_PSV _ADC1Interrupt()
 {
-    cont++;
     unsigned int ADCValue = ADC1BUF0;
     switch (AD1CHS0bits.CH0SA)
     {
@@ -124,3 +121,5 @@ void _ISR_NO_PSV _ADC1Interrupt()
     IFS0bits.AD1IF = 0;
     AD1CON1bits.SAMP = 1;
 }
+
+// Valores obtenidos => ADCS1 127000 ADCS 43 9800
