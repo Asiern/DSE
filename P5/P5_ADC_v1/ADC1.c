@@ -78,11 +78,23 @@ void comienzo_muestreo()
 // Funcion que recoge el valor del convertidor por encuesta
 void recoger_valorADC1()
 {
+
+    unsigned int ADCValue = ADC1BUF0;
     while (!AD1CON1bits.DONE)
         ;
-    unsigned int ADCValue = ADC1BUF0;
-    Ventana_LCD[0][4] = tabla_carac[(ADCValue & 0x0F00) >> 8];
-    Ventana_LCD[0][5] = tabla_carac[(ADCValue & 0x00F0) >> 4];
-    Ventana_LCD[0][6] = tabla_carac[(ADCValue & 0x000F)];
+    if (AD1CHS0bits.CH0SA == 5)
+    {
+        Ventana_LCD[0][11] = tabla_carac[(ADCValue & 0x0F00) >> 8];
+        Ventana_LCD[0][12] = tabla_carac[(ADCValue & 0x00F0) >> 4];
+        Ventana_LCD[0][13] = tabla_carac[(ADCValue & 0x000F)];
+        AD1CHS0bits.CH0SA = 4; // elige la entrada analogica conectada
+    }
+    else
+    {
+        Ventana_LCD[0][4] = tabla_carac[(ADCValue & 0x0F00) >> 8];
+        Ventana_LCD[0][5] = tabla_carac[(ADCValue & 0x00F0) >> 4];
+        Ventana_LCD[0][6] = tabla_carac[(ADCValue & 0x000F)];
+        AD1CHS0bits.CH0SA = 5; // elige la entrada analogica conectada
+    }
     AD1CON1bits.SAMP = 0;
 }
