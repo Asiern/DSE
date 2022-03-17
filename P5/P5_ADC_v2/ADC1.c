@@ -8,9 +8,13 @@ Fecha:
 #include "memoria.h"
 #include "commons.h"
 
+unsigned int cont, mediaTemp, mediaPot;
+extern int calcularMedias;
+
 void inic_ADC1(void)
 {
     cont = 0;
+    calcularMedias = 0;
     // Inicializacion registro control AD1CON1
     AD1CON1 = 0; // todos los campos a 0
 
@@ -101,25 +105,44 @@ void recoger_valorADC1()
     AD1CON1bits.SAMP = 0;
 }
 
+void calcular_media()
+{
+    // Temperatura
+    int Temp = mediaTemp / 8;
+    mediaTemp = 0;
+    Ventana_LCD[0][11] = tabla_carac[(Temp & 0x0F00) >> 8];
+    Ventana_LCD[0][12] = tabla_carac[(Temp & 0x00F0) >> 4];
+    Ventana_LCD[0][13] = tabla_carac[(Temp & 0x000F)];
+
+    // Potenciometro
+    int Pot = mediaPot / 8;
+    mediaPot = 0;
+    Ventana_LCD[0][4] = tabla_carac[(Pot & 0x0F00) >> 8];
+    Ventana_LCD[0][5] = tabla_carac[(Pot & 0x00F0) >> 4];
+    Ventana_LCD[0][6] = tabla_carac[(Pot & 0x000F)];
+}
+
 void _ISR_NO_PSV _ADC1Interrupt()
 {
     unsigned int ADCValue = ADC1BUF0;
     switch (AD1CHS0bits.CH0SA)
     {
     case 4:
-        Ventana_LCD[0][11] = tabla_carac[(ADCValue & 0x0F00) >> 8];
-        Ventana_LCD[0][12] = tabla_carac[(ADCValue & 0x00F0) >> 4];
-        Ventana_LCD[0][13] = tabla_carac[(ADCValue & 0x000F)];
+        mediaTemp += ADCValue;
         break;
     case 5:
-        Ventana_LCD[0][4] = tabla_carac[(ADCValue & 0x0F00) >> 8];
-        Ventana_LCD[0][5] = tabla_carac[(ADCValue & 0x00F0) >> 4];
-        Ventana_LCD[0][6] = tabla_carac[(ADCValue & 0x000F)];
+        mediaPot += ADCValue;
         break;
     }
     AD1CHS0bits.CH0SA = AD1CHS0bits.CH0SA == 5 ? 4 : 5;
+    cont++;
+    if (cont == 16)
+    {
+        calcularMedias = 1;
+        cont = 0;
+    }
     IFS0bits.AD1IF = 0;
-    AD1CON1bits.SAMP = 1;
+    AD1CON1bits.SAMP = 0;
 }
 
 // Valores obtenidos => ADCS1 127000 ADCS 43 9800

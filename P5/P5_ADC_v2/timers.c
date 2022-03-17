@@ -63,6 +63,18 @@ void Delay_us(int delay)
     T9CONbits.TON = 0;
 }
 
+void inic_Timer3()
+{
+    TMR3 = 0;
+    PR3 = 20000 - 1;
+    T3CONbits.TCKPS = 0;
+    T3CONbits.TCS = 0;
+    T3CONbits.TGATE = 0;
+    T3CONbits.TON = 1;
+    IEC0bits.T3IE = 1;
+    IFS0bits.T3IF = 0;
+}
+
 // Interrumpir cada 2.5ms
 void inic_Timer5()
 {
@@ -150,6 +162,12 @@ void _ISR_NO_PSV _T7Interrupt()
 {
     flag = 1;
     IFS3bits.T7IF = 0; // Apagar el flag de petición de interrupción
+}
+
+void _ISR_NO_PSV _T3Interrupt()
+{
+    AD1CON1bits.SAMP = 1;
+    IFS0bits.T3IF = 0; // Apagar el flag de petición de interrupción
 }
 
 /**

@@ -4,3 +4,4 @@
 void inic_ADC1();
 void comienzo_muestreo();
 void recoger_valorADC1();
+void calcular_media();

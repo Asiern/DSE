@@ -28,11 +28,11 @@
       <itemPath>../GPIO.c</itemPath>
       <itemPath>../LCD.c</itemPath>
       <itemPath>../UART2_RS232.c</itemPath>
-      <itemPath>../main_P5_ADC_v2.c</itemPath>
       <itemPath>../memoria.c</itemPath>
       <itemPath>../oscilator.c</itemPath>
       <itemPath>../timers.c</itemPath>
       <itemPath>../utilidades.c</itemPath>
+      <itemPath>../main_P5_ADC_v3.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

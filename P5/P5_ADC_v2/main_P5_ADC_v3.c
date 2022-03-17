@@ -21,6 +21,7 @@ Fecha:
 #include "UART2_RS232.h"
 #include "ADC1.h"
 
+int calcularMedias;
 int main()
 {
 
@@ -46,13 +47,18 @@ int main()
 	init_CN();	   // Inicializar modulo de interrupciones CN
 	inic_crono();  // Inicializacion variables cronometro.
 	inic_Timer7(); // Inicializacion T7 con un periodo de 10 milisegundos.
+	inic_Timer3();
 
 	// Escribir Mensaje del cronómetro en la segunda linea
 	copiar_FLASH_RAM(Mens_LCD_6, 1);
 	copiar_FLASH_RAM(Mens_LCD_7, 0);
-	comienzo_muestreo();
 	while (1)
 	{
+		if (calcularMedias == 1)
+		{
+			calcularMedias = 0;
+			calcular_media();
+		}
 		cronometro();
 	}
 	return (0);
