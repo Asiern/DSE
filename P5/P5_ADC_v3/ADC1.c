@@ -9,7 +9,7 @@ Fecha:
 #include "commons.h"
 
 unsigned int cont, mediaTemp, mediaPot;
-extern int calcularMedias;
+extern int calcularMedias; // Flag para indicar que hay que calcular las medias
 
 void inic_ADC1(void)
 {
@@ -105,6 +105,7 @@ void recoger_valorADC1()
     AD1CON1bits.SAMP = 0;
 }
 
+// Calcular medias y enviarlas a ventana LCD
 void calcular_media()
 {
     // Temperatura
@@ -122,27 +123,31 @@ void calcular_media()
     Ventana_LCD[0][6] = tabla_carac[(Pot & 0x000F)];
 }
 
+/**
+ * Rutina de atencion a las interrupciones del modulo ADC
+ */
 void _ISR_NO_PSV _ADC1Interrupt()
 {
     unsigned int ADCValue = ADC1BUF0;
     switch (AD1CHS0bits.CH0SA)
     {
-    case 4:
+    case 4: // Guardar valor del sensor del temperatura
         mediaTemp += ADCValue;
         break;
-    case 5:
+    case 5: // Guardar valor del sensor de potenciometro
         mediaPot += ADCValue;
         break;
     }
+    // Cambiar CHOSA para alternar lecturas entre Potenciometro y Sensor de temperatura
     AD1CHS0bits.CH0SA = AD1CHS0bits.CH0SA == 5 ? 4 : 5;
-    cont++;
+    cont++; // Aumentar valor del contador de muestras
     if (cont == 16)
     {
-        calcularMedias = 1;
+        calcularMedias = 1; // Habilitar flag para calcular medias
         cont = 0;
     }
-    IFS0bits.AD1IF = 0;
-    AD1CON1bits.SAMP = 0;
+    IFS0bits.AD1IF = 0;   // Apagar flag de interrupcion
+    AD1CON1bits.SAMP = 0; // Apagar flag de sampleo
 }
 
 // Valores obtenidos => ADCS1 127000 ADCS 43 9800

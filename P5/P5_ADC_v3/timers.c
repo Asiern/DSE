@@ -63,6 +63,7 @@ void Delay_us(int delay)
     T9CONbits.TON = 0;
 }
 
+// Interrumpir cada 1ms
 void inic_Timer3()
 {
     TMR3 = 0;
@@ -158,16 +159,18 @@ void cronometro() // control del tiempo mediante el temporizador 7
     }
 }
 
+// Rutina de atencion a las interrupciones del T7
 void _ISR_NO_PSV _T7Interrupt()
 {
     flag = 1;
     IFS3bits.T7IF = 0; // Apagar el flag de petición de interrupción
 }
 
+// Rutina de atencion a las interrupciones del T3
 void _ISR_NO_PSV _T3Interrupt()
 {
-    AD1CON1bits.SAMP = 1;
-    IFS0bits.T3IF = 0; // Apagar el flag de petición de interrupción
+    AD1CON1bits.SAMP = 1; // Habilitar muestreo
+    IFS0bits.T3IF = 0;    // Apagar el flag de petición de interrupción
 }
 
 /**
