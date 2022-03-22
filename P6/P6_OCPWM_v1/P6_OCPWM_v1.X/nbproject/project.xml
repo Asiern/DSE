@@ -3,8 +3,8 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>P5_ADC_v3</name>
-            <creation-uuid>3091fc33-5f38-409d-8be6-44f6cc75899b</creation-uuid>
+            <name>P6_OCPWM_v1</name>
+            <creation-uuid>94389ed1-2b5b-449a-acd5-3dc20483a93d</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>
@@ -14,7 +14,6 @@
             <make-dep-projects/>
             <sourceRootList>
                 <sourceRootElem>..</sourceRootElem>
-                <sourceRootElem>../../P5_ADC_v2</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>
