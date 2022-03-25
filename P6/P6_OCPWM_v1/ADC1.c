@@ -111,16 +111,16 @@ void calcular_media()
     // Temperatura
     int Temp = mediaTemp / 8;
     mediaTemp = 0;
-    Ventana_LCD[0][11] = tabla_carac[(Temp & 0x0F00) >> 8];
-    Ventana_LCD[0][12] = tabla_carac[(Temp & 0x00F0) >> 4];
-    Ventana_LCD[0][13] = tabla_carac[(Temp & 0x000F)];
+    Ventana_LCD[2][11] = tabla_carac[(Temp & 0x0F00) >> 8];
+    Ventana_LCD[2][12] = tabla_carac[(Temp & 0x00F0) >> 4];
+    Ventana_LCD[2][13] = tabla_carac[(Temp & 0x000F)];
 
     // Potenciometro
     int Pot = mediaPot / 8;
     mediaPot = 0;
-    Ventana_LCD[0][4] = tabla_carac[(Pot & 0x0F00) >> 8];
-    Ventana_LCD[0][5] = tabla_carac[(Pot & 0x00F0) >> 4];
-    Ventana_LCD[0][6] = tabla_carac[(Pot & 0x000F)];
+    Ventana_LCD[2][4] = tabla_carac[(Pot & 0x0F00) >> 8];
+    Ventana_LCD[2][5] = tabla_carac[(Pot & 0x00F0) >> 4];
+    Ventana_LCD[2][6] = tabla_carac[(Pot & 0x000F)];
 }
 
 /**

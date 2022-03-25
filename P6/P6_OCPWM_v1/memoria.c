@@ -13,6 +13,7 @@ const unsigned char Mens_LCD_4[] = {"  S4 comienza --"}; // linea 2.2, 16 caract
 const unsigned char Mens_LCD_5[] = {"S3 st/stop, S6=0"}; // linea 1.3, 16 caracteres
 const unsigned char Mens_LCD_6[] = {"Crono: --:--,-  "}; // linea 2.3, 16 caracteres
 const unsigned char Mens_LCD_7[] = {"  P 000  T 000  "}; // linea 2.3, 16 caracteres
+const unsigned char Mens_LCD_8[] = {" OC1RS     0000 "}; // linea 2.3, 16 caracteres
 
 unsigned char Ventana_LCD[N_LINEAS][TAM_LINEA];
 

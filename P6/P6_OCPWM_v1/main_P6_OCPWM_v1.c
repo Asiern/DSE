@@ -54,7 +54,8 @@ int main()
 
 	// Escribir Mensaje del cronómetro en la segunda linea
 	copiar_FLASH_RAM(Mens_LCD_6, 1);
-	copiar_FLASH_RAM(Mens_LCD_7, 0);
+	copiar_FLASH_RAM(Mens_LCD_8, 0);
+	copiar_FLASH_RAM(Mens_LCD_7, 2);
 	while (1)
 	{
 		if (calcularMedias == 1)

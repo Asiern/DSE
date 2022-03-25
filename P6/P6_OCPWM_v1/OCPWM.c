@@ -9,6 +9,7 @@ Fecha:
 
 #include "p24HJ256GP610A.h"
 #include "commons.h"
+#include "OCPWM.h"
 
 unsigned int DUTY_MIN = T20ms / 20 * MINPWM; // valor minimo de DUTY
 unsigned int DUTY_MAX = T20ms / 20 * MAXPWM; // valor maximo de DUTY

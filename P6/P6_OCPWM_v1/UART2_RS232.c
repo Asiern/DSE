@@ -15,12 +15,12 @@ Fecha:
 // Estados utilizados en la rutina de atencion del UART
 enum
 {
-	L1,			 // Estado de escritura en la linea1
-	L2,			 // Estado de escritura en la linea2
+	L,			 // Estado de escritura de la linea
 	HOME,		 // Estado de mover el cursor a la posicion inicial
 	JP			 // Estado de escritura de salto de linea
 } estado = HOME; // Estado inicial L1
 
+int nLinea = 0;
 int TPos = 0; // Posicion del caracter a enviar por UART de la ventanaLCD
 
 void inic_UART2()
@@ -133,9 +133,17 @@ void _ISR_NO_PSV _U2RXInterrupt()
 		break;
 	case 'n':
 		OC1RS = OC1RS + 50 < T20ms / 20 * MAXPWM ? OC1RS + 50 : T20ms / 20 * MAXPWM;
+		Ventana_LCD[0][11] = tabla_carac[(OC1RS & 0xF000) >> 12];
+		Ventana_LCD[0][12] = tabla_carac[(OC1RS & 0x0F00) >> 8];
+		Ventana_LCD[0][13] = tabla_carac[(OC1RS & 0x00F0) >> 4];
+		Ventana_LCD[0][14] = tabla_carac[OC1RS & 0x000F];
 		break;
 	case 'm':
 		OC1RS = OC1RS - 50 > T20ms / 20 * MINPWM ? OC1RS - 50 : T20ms / 20 * MINPWM;
+		Ventana_LCD[0][11] = tabla_carac[(OC1RS & 0xF000) >> 12];
+		Ventana_LCD[0][12] = tabla_carac[(OC1RS & 0x0F00) >> 8];
+		Ventana_LCD[0][13] = tabla_carac[(OC1RS & 0x00F0) >> 4];
+		Ventana_LCD[0][14] = tabla_carac[OC1RS & 0x000F];
 		break;
 	default:
 		break;
@@ -149,18 +157,19 @@ void _ISR_NO_PSV _U2RXInterrupt()
  * Mediante una máquina de estados (con los estados definidos en el enum llamado estado),
  * gestionamos el envio de caracteres por UART para la correcta visualización.
  *
- * En los estados L1 y L2, escribimos en su línea correspondiente
+ * En el estado L, escribimos en su línea correspondiente
  * Mediante el estado JP, escribimos el salto de línea.
  * Mediante el estado HOME, movemos el cursor al principio
  *
  * Se utiliza la variable TPos para indicar la posición en la que está escribiendo
+ * Se utiliza la variable nLinea para indicar la linea que se está escribiendo
  */
 void _ISR_NO_PSV _U2TXInterrupt()
 {
 	switch (estado)
 	{
-	case L1:
-		U2TXREG = Ventana_LCD[0][TPos];
+	case L:
+		U2TXREG = Ventana_LCD[nLinea][TPos];
 		if (TPos == 15)
 		{
 			estado = JP;
@@ -172,7 +181,8 @@ void _ISR_NO_PSV _U2TXInterrupt()
 	case JP:
 		if (TPos == 1)
 		{
-			estado = L2;
+			estado = nLinea == N_LINEAS - 1 ? HOME : L;
+			nLinea = nLinea == N_LINEAS - 1 ? 0 : nLinea + 1;
 			TPos = 0;
 			U2TXREG = LF;
 		}
@@ -182,22 +192,12 @@ void _ISR_NO_PSV _U2TXInterrupt()
 			U2TXREG = CR;
 		}
 		break;
-	case L2:
-		U2TXREG = Ventana_LCD[1][TPos];
-		if (TPos == 15)
-		{
-			estado = HOME;
-			TPos = 0;
-		}
-		else
-			TPos++;
-		break;
 	case HOME:
 		U2TXREG = home[TPos];
 		if (TPos == 2)
 		{
 			TPos = 0;
-			estado = L1;
+			estado = L;
 		}
 		else
 			TPos++;
