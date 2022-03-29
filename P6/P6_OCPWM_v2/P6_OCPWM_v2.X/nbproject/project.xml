@@ -3,8 +3,8 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>P6_OCPWM_v1</name>
-            <creation-uuid>96c9d616-3ff2-477e-9017-873a4edc5e5c</creation-uuid>
+            <name>P6_OCPWM_v2</name>
+            <creation-uuid>1deb011f-2e98-4293-b203-5686604825d8</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>
@@ -13,6 +13,7 @@
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
+                <sourceRootElem>../../P6_OCPWM_v1</sourceRootElem>
                 <sourceRootElem>..</sourceRootElem>
             </sourceRootList>
             <confList>

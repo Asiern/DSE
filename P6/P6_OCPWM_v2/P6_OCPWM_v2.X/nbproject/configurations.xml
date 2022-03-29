@@ -30,7 +30,7 @@
       <itemPath>../LCD.c</itemPath>
       <itemPath>../OCPWM.c</itemPath>
       <itemPath>../UART2_RS232.c</itemPath>
-      <itemPath>../main_P6_OCPWM_v1.c</itemPath>
+      <itemPath>../main_P6_OCPWM_v2.c</itemPath>
       <itemPath>../memoria.c</itemPath>
       <itemPath>../oscilator.c</itemPath>
       <itemPath>../timers.c</itemPath>
@@ -43,6 +43,7 @@
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
+    <Elem>../../P6_OCPWM_v1</Elem>
     <Elem>..</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
@@ -256,6 +257,7 @@
         <property key="UART 1" value="true"/>
         <property key="UART 2" value="true"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="hwtoolclock.instructionspeed" value="4"/>
         <property key="hwtoolclock.units" value="mips"/>
