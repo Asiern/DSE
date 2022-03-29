@@ -1,1 +1,1 @@
-extern unsigned int mili, deci, seg, min, flag, reset, servomode, mediaTemp, mediaPot;
+extern unsigned int mili, deci, seg, min, flag, reset, mediaTemp, mediaPot, servomode,Pot;

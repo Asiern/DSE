@@ -10,3 +10,4 @@ extern unsigned char tabla_carac[16];
 
 // funciones
 void copiar_FLASH_RAM(const unsigned char *texto, unsigned int i);
+void imprimir_valor_pot_lcd();

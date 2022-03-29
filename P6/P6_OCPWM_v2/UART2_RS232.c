@@ -132,23 +132,17 @@ void _ISR_NO_PSV _U2RXInterrupt()
 		TMR7 = 0;
 		break;
 	case 'n':
-		if (servomode == 0)
+		if (servomode == UART_MODE)
 		{
 			OC1RS = OC1RS + 50 < T20ms / 20 * MAXPWM ? OC1RS + 50 : T20ms / 20 * MAXPWM;
-			Ventana_LCD[0][11] = tabla_carac[(OC1RS & 0xF000) >> 12];
-			Ventana_LCD[0][12] = tabla_carac[(OC1RS & 0x0F00) >> 8];
-			Ventana_LCD[0][13] = tabla_carac[(OC1RS & 0x00F0) >> 4];
-			Ventana_LCD[0][14] = tabla_carac[OC1RS & 0x000F];
+			imprimir_valor_pot_lcd();
 		}
 		break;
 	case 'm':
-		if (servomode == 0)
+		if (servomode == UART_MODE)
 		{
 			OC1RS = OC1RS - 50 > T20ms / 20 * MINPWM ? OC1RS - 50 : T20ms / 20 * MINPWM;
-			Ventana_LCD[0][11] = tabla_carac[(OC1RS & 0xF000) >> 12];
-			Ventana_LCD[0][12] = tabla_carac[(OC1RS & 0x0F00) >> 8];
-			Ventana_LCD[0][13] = tabla_carac[(OC1RS & 0x00F0) >> 4];
-			Ventana_LCD[0][14] = tabla_carac[OC1RS & 0x000F];
+			imprimir_valor_pot_lcd();
 		}
 		break;
 	default:

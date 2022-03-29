@@ -24,10 +24,10 @@ Fecha:
 #include "utilidades.h"
 
 int calcularMedias;
-unsigned int servomode;
+
+unsigned int servomode = UART_MODE;
 int main()
 {
-	servomode = 0;
 	inic_oscilator();  // Seleccion e inicializacion del reloj: 40 MHz
 	Init_LCD();		   // Inicializar LCD
 	inic_leds();	   // Inicializacio�n leds: sentido y valor inicial.
@@ -58,14 +58,21 @@ int main()
 	copiar_FLASH_RAM(Mens_LCD_6, 1);
 	copiar_FLASH_RAM(Mens_LCD_8, 0);
 	copiar_FLASH_RAM(Mens_LCD_7, 2);
+
+
+
 	while (1)
 	{
 		if (calcularMedias == 1)
 		{
 			calcularMedias = 0;
 			calcular_media();
-			// if (servomode == 1)
-			// 	mover_servo_pot(conversion_pot_servo(mediaPot));
+
+			if(servomode == POT_MODE){
+				mover_servo_pot(conversion_pot_servo(Pot));
+				imprimir_valor_pot_lcd();
+
+			}
 		}
 		cronometro();
 	}

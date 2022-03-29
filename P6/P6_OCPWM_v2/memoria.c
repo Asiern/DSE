@@ -23,3 +23,11 @@ void copiar_FLASH_RAM(const unsigned char *texto, unsigned int i)
   for (j = 0; j < TAM_LINEA; j++)
     Ventana_LCD[i][j] = texto[j];
 }
+
+void imprimir_valor_pot_lcd()
+{
+    Ventana_LCD[0][11] = tabla_carac[(OC1RS & 0xF000) >> 12];
+    Ventana_LCD[0][12] = tabla_carac[(OC1RS & 0x0F00) >> 8];
+    Ventana_LCD[0][13] = tabla_carac[(OC1RS & 0x00F0) >> 4];
+    Ventana_LCD[0][14] = tabla_carac[OC1RS & 0x000F];
+}

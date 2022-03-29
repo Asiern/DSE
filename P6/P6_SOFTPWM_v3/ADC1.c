@@ -128,7 +128,7 @@ void calcular_media()
 
 void mover_servo_pot(int pos)
 {
-    OC1RS = pos;
+    duty = pos;
 }
 
 /**

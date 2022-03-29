@@ -57,7 +57,8 @@ unsigned int conversion_pot_servo(unsigned int valor_pot)
 {
     unsigned int DUTY_MIN = T20ms / 20 * MINPWM; // valor minimo de DUTY
     unsigned int DUTY_MAX = T20ms / 20 * MAXPWM; // valor maximo de DUTY
+
     unsigned int pos =DUTY_MIN + ((valor_pot / 1023.0) * (DUTY_MAX - DUTY_MIN));
-    Nop();
+    
     return pos;
 }

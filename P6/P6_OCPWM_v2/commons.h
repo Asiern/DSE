@@ -62,3 +62,6 @@
                     // teniendo en cuenta un prescaler de xxx.
 #define MINPWM 0.3  // Duracion minima pulso PWM (en milisegundos)
 #define MAXPWM 2.3  // Duracion maxima pulso PWM (en milisegundos)
+
+#define UART_MODE 0
+#define POT_MODE 1
