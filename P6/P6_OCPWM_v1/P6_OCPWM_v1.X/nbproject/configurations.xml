@@ -30,11 +30,11 @@
       <itemPath>../LCD.c</itemPath>
       <itemPath>../OCPWM.c</itemPath>
       <itemPath>../UART2_RS232.c</itemPath>
+      <itemPath>../main_P6_OCPWM_v1.c</itemPath>
       <itemPath>../memoria.c</itemPath>
       <itemPath>../oscilator.c</itemPath>
       <itemPath>../timers.c</itemPath>
       <itemPath>../utilidades.c</itemPath>
-      <itemPath>../main_P6_OCPWM_v1.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

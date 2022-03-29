@@ -1,6 +1,6 @@
 
 #define TAM_LINEA 16
-#define N_LINEAS 10
+#define N_LINEAS 3
 
 // constantes y variables
 extern const unsigned char Mens_LCD_1[16], Mens_LCD_2[16], Mens_LCD_3[16];
