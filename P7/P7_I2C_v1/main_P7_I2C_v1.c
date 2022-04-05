@@ -22,10 +22,16 @@ Fecha:
 #include "ADC1.h"
 #include "OCPWM.h"
 #include "utilidades.h"
+#include "srf08.h"
+#include "i2c_funciones.h"
 
 int calcularMedias;
 
 unsigned int servomode = UART_MODE;
+unsigned char dir;
+unsigned int direccion = 0xE8;
+unsigned char distancia[2];
+
 int main()
 {
 
@@ -56,9 +62,16 @@ int main()
 	inic_Timer7(); // Inicializacion T7 con un periodo de 10 milisegundos.
 
 	// Escribir Mensaje del cronómetro en la segunda linea
-	copiar_FLASH_RAM(Mens_LCD_6, 1);
 	copiar_FLASH_RAM(Mens_LCD_8, 0);
+	copiar_FLASH_RAM(Mens_LCD_6, 1);
 	copiar_FLASH_RAM(Mens_LCD_7, 2);
+	copiar_FLASH_RAM(Mens_LCD_9, 3);
+
+	inic_Timer6();
+	InitI2C_1();
+	inic_medicion_dis(direccion);
+	sensor_listo = 0;
+	T6CONbits.TON = 1; // Encender timer
 
 	while (1)
 	{
@@ -73,6 +86,21 @@ int main()
 				imprimir_valor_pot_lcd();
 			}
 		}
+
+		if (sensor_listo)
+		{
+			// Procesoar medicion anterior
+			leer_medicion(direccion, distancia);
+			unsigned int distancia_total = (distancia[0] << 8) | distancia[1];
+			conversion_decimal(&(Ventana_LCD[3][11]), distancia_total);
+
+			// Iniciar nueva medicion
+			inic_medicion_dis(direccion);
+			sensor_listo = 0;
+			TMR6 = 0;
+			T6CONbits.TON = 1; // Encender timer
+		}
+
 		cronometro();
 	}
 	return (0);

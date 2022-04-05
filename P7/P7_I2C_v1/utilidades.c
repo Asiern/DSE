@@ -33,23 +33,19 @@ void conversion_tiempo(unsigned char *dir, unsigned int val)
     }
 }
 
-void conversion_hex(unsigned char *dir, unsigned int val)
+void conversion_decimal(unsigned char *dir, unsigned int val)
 {
     unsigned char dig;
-    if (val > 99)
+    if (val > 300)
     {
         while (1)
             ;
     }
     else
     {
-        dig = val / 16;
-        dig = tabla_carac[dig];
-        *dir = dig;
-        dir++;
-        dig = val % 16;
-        dig = tabla_carac[dig];
-        *dir = dig;
+        *dir = tabla_carac[(val & 0xf00) >> 8];
+        *(dir + 1) = tabla_carac[(val & 0x0f0) >> 4];
+        *(dir + 2) = tabla_carac[(val & 0x00f)];
     }
 }
 
@@ -58,7 +54,7 @@ unsigned int conversion_pot_servo(unsigned int valor_pot)
     unsigned int DUTY_MIN = T20ms / 20 * MINPWM; // valor minimo de DUTY
     unsigned int DUTY_MAX = T20ms / 20 * MAXPWM; // valor maximo de DUTY
 
-    unsigned int pos =DUTY_MIN + ((valor_pot / 1023.0) * (DUTY_MAX - DUTY_MIN));
-    
+    unsigned int pos = DUTY_MIN + ((valor_pot / 1023.0) * (DUTY_MAX - DUTY_MIN));
+
     return pos;
 }

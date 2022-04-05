@@ -6,7 +6,7 @@
 
 // Globals
 #include "globals.h"
-unsigned int mili, deci, seg, min, reset, flag, estado_pwm = 0, duty;
+unsigned int mili, deci, seg, min, reset, flag, estado_pwm = 0, duty, sensor_listo = 0;
 
 // Estados utilizados en la rutina de atencion del T5
 enum
@@ -72,7 +72,7 @@ void inic_Timer2_PWM()
     T2CONbits.TCKPS = 1;
     T2CONbits.TCS = 0;
     T2CONbits.TGATE = 0;
-    T2CONbits.TON = 1;
+    T2CONbits.TON = 0;
     IFS0bits.T2IF = 0;
     IEC0bits.T2IE = 1;
 }
@@ -119,6 +119,18 @@ void inic_Timer7()
     IEC3bits.T7IE = 1;   // habilitar interrupciones del temporizador t7
     T7CONbits.TGATE = 0; // Deshabilitar el modo Gate
     T7CONbits.TON = 1;   // puesta en marcha del temporizador
+}
+
+void inic_Timer6()
+{
+    TMR6 = 0;
+    PR6 = 175000 / 8;
+    T6CONbits.TCKPS = 2;
+    T6CONbits.TCS = 0;
+    T6CONbits.TGATE = 0;
+    IFS2bits.T6IF = 0;
+    IEC2bits.T6IE = 1;
+    T6CONbits.TON = 0;
 }
 
 void inic_crono()
@@ -178,6 +190,14 @@ void _ISR_NO_PSV _T7Interrupt()
 {
     flag = 1;
     IFS3bits.T7IF = 0; // Apagar el flag de petición de interrupción
+}
+
+// Rutina de atencion a las interrupciones del T7
+void _ISR_NO_PSV _T6Interrupt()
+{
+    sensor_listo = 1;
+    T6CONbits.TON = 0;
+    IFS2bits.T6IF = 0; // Apagar el flag de petición de interrupción
 }
 
 // Rutina de atencion a las interrupciones del T3

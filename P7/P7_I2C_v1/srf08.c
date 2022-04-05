@@ -22,7 +22,6 @@ unsigned int leer_medicion(unsigned char dirI2C, unsigned char *dis)
 // Parametro dis proporciona la direccion de un array en el que devolver la medicion
 // Cada medicion 2 bytes
 {
-   // A completar
    return LDByteReadI2C_1(dirI2C, 0x02, dis, 2);
 }
 
@@ -32,7 +31,6 @@ void cambiar_direccion(unsigned char dirI2C, unsigned char newdirI2C)
 // Parametro newdirI2C corresponde a la nueva direccion I2C que se le va a dar
 
 {
-   // A completar
    LDByteWriteI2C_1(dirI2C, 0x00, 0xA0);
    LDByteWriteI2C_1(dirI2C, 0x00, 0xAA);
    LDByteWriteI2C_1(dirI2C, 0x00, 0xA5);
@@ -44,7 +42,6 @@ unsigned int detectar_direccion(unsigned char *dirI2C)
 // Si el sensor responde, la funcion devuelve 0 y actualiza el parametro dirI2C
 // Si no responde ningun sensor, devuelve 1
 {
-   // A completar
    unsigned int i;
    unsigned int em = 1;
    unsigned char value;
