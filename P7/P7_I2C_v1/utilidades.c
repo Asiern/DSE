@@ -35,18 +35,9 @@ void conversion_tiempo(unsigned char *dir, unsigned int val)
 
 void conversion_decimal(unsigned char *dir, unsigned int val)
 {
-    unsigned char dig;
-    if (val > 300)
-    {
-        while (1)
-            ;
-    }
-    else
-    {
-        *dir = tabla_carac[(val & 0xf00) >> 8];
-        *(dir + 1) = tabla_carac[(val & 0x0f0) >> 4];
-        *(dir + 2) = tabla_carac[(val & 0x00f)];
-    }
+    *dir = tabla_carac[(val & 0xf00) >> 8];
+    *(dir + 1) = tabla_carac[(val & 0x0f0) >> 4];
+    *(dir + 2) = tabla_carac[(val & 0x00f)];
 }
 
 unsigned int conversion_pot_servo(unsigned int valor_pot)

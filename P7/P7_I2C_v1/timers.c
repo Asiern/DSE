@@ -72,7 +72,7 @@ void inic_Timer2_PWM()
     T2CONbits.TCKPS = 1;
     T2CONbits.TCS = 0;
     T2CONbits.TGATE = 0;
-    T2CONbits.TON = 0;
+    T2CONbits.TON = 1;
     IFS0bits.T2IF = 0;
     IEC0bits.T2IE = 1;
 }
